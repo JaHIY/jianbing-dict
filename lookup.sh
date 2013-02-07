@@ -22,6 +22,7 @@ main() {
         printf '%s\n' "$1"
         dig "${1}.${BASE_URL}" txt +short +tcp | sed -e 's/^"\(.*\)"$/\1\\010/g' | \
             grep -o '\\[[:digit:]]\{3\}\+\|.' | char
+    #grep -Po '\\[[:digit:]]{3}+|.+?(?=\\[[:digit:]]{3})|.+' is greater but less compatibility
         printf '\n'
         shift
     done
