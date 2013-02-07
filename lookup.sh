@@ -26,6 +26,7 @@ main() {
         printf '\n'
         shift
     done
+    return 0
 }
 
 main "$@"
