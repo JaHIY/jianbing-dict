@@ -20,8 +20,8 @@ main() {
     while [ $# -gt 0 ]
     do
         printf '%s\n' "$1"
-        dig "${1}.${BASE_URL}" txt +short +tcp | sed -e 's/^"\(.*\)"$/\1\\010/g' | \
-            grep -o '\\[[:digit:]]\{3\}\+\|.' | char
+        dig "${1}.${BASE_URL}" txt +short +tcp | sed -e 's/^"//' -e 's/"$/\\010/' | \
+            grep -o '\(\\[[:digit:]]\{3\}\)\{1,\}\|.' | char
     #grep -Po '\\[[:digit:]]{3}+|.+?(?=\\[[:digit:]]{3})|.+' is greater but less compatibility
         printf '\n'
         shift
