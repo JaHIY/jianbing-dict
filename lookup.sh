@@ -17,14 +17,20 @@ char() {
 }
 
 main() {
-    while [ $# -gt 0 ]
+    [ $# -gt 0 ] || return 1
+    while true
     do
         printf '%s\n' "$1"
         dig "${1}.${BASE_URL}" txt +short +tcp | sed -e 's/^"//' -e 's/"$/\\010/' | \
             grep -o '\(\\[[:digit:]]\{3\}\)\{1,\}\|.' | char
-    #grep -Po '\\[[:digit:]]{3}+|.+?(?=\\[[:digit:]]{3})|.+' is greater but less compatibility
-        printf '\n'
+        #grep -Po '(\\[[:digit:]]{3})+|.+?(?=\\[[:digit:]]{3})|.+' is greater but less compatibility
         shift
+        if [ $# -gt 0 ]
+        then
+            printf '\n'
+        else
+            break
+        fi
     done
     return 0
 }
